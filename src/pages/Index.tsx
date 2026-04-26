@@ -1,16 +1,33 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
+import { UPTLogo } from "@/components/UPTLogo";
+import { Loader2 } from "lucide-react";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+const Index = () => {
+  const navigate = useNavigate();
+  const { user, loading } = useAuth();
+
+  useEffect(() => {
+    if (loading) return;
+    const t = setTimeout(() => {
+      navigate(user ? "/app" : "/auth", { replace: true });
+    }, 900);
+    return () => clearTimeout(t);
+  }, [user, loading, navigate]);
+
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
-    </div>
+    <main className="flex min-h-screen flex-col items-center justify-center px-6">
+      <div className="animate-fade-in flex flex-col items-center text-center">
+        <UPTLogo size={120} />
+        <h1 className="mt-6 text-3xl font-bold tracking-tight">
+          UPT <span className="text-accent">ARAGUA</span>
+        </h1>
+        <p className="mt-2 text-sm text-muted-foreground">Campus Conectado · Red estudiantil</p>
+        <Loader2 className="mt-8 h-5 w-5 animate-spin text-accent" />
+      </div>
+    </main>
   );
 };
-
-const Index = PlaceholderIndex;
 
 export default Index;
