@@ -4,12 +4,14 @@ import { BottomNav } from "./BottomNav";
 import { Loader2 } from "lucide-react";
 import { useNotifications } from "@/hooks/useNotifications";
 import { useLocalNotifications } from "@/hooks/useLocalNotifications";
+import { useFcm } from "@/hooks/useFcm";
 import { InstallPrompt } from "./InstallPrompt";
 
 export const AppLayout = () => {
   const { user, loading } = useAuth();
   useNotifications();
   useLocalNotifications();
+  useFcm();
 
   if (loading) {
     return (
