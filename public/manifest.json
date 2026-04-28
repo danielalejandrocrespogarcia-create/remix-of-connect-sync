@@ -1,0 +1,26 @@
+{
+  "name": "UPT Aragua | Campus Conectado",
+  "short_name": "UPT",
+  "description": "Plataforma oficial UPT Aragua - Federico Brito Figueroa.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a0f1f",
+  "theme_color": "#103d8a",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
