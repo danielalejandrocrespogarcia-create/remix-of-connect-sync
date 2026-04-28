@@ -20,6 +20,14 @@ if ((inIframe || isPreviewHost) && "serviceWorker" in navigator) {
     .getRegistrations()
     .then((regs) => regs.forEach((r) => r.unregister()))
     .catch(() => {});
+} else if ("serviceWorker" in navigator) {
+  // Production: register the FCM service worker eagerly so PWA tooling
+  // (PWABuilder, Lighthouse) can detect it without waiting for auth.
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/firebase-messaging-sw.js", { scope: "/" })
+      .catch((err) => console.warn("[SW] register failed", err));
+  });
 }
 
 createRoot(document.getElementById("root")!).render(<App />);
