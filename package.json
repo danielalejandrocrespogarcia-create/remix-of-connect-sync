@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "build:dev": "vite build --mode development",
+    "build:android": "vite build && cap sync android",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest run",
@@ -71,6 +72,8 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
+    "@capacitor/android": "^8.3.1",
+    "@capacitor/cli": "^8.3.1",
     "@eslint/js": "^9.32.0",
     "@tailwindcss/typography": "^0.5.19",
     "@testing-library/jest-dom": "^6.6.0",
