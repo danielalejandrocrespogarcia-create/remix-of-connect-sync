@@ -3,6 +3,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { onForegroundMessage, requestFcmToken } from "@/lib/firebase";
 import { toast } from "sonner";
+import { isCapacitorApp } from "@/lib/platform";
 
 /**
  * Registers the FCM service worker, requests permission, retrieves the token
@@ -16,6 +17,8 @@ export const useFcm = () => {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    // Web push does not work inside the Android WebView.
+    if (isCapacitorApp) return;
 
     // Skip in iframe / preview hosts
     let inIframe = false;
