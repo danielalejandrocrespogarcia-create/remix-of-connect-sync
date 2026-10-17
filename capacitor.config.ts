@@ -1,15 +1,20 @@
 import type { CapacitorConfig } from "@capacitor/cli";
 
+/**
+ * Exportar UPT Aragua a Android Studio:
+ *   1. bun install
+ *   2. bun run build:android   (compila + crea/sincroniza android/)
+ *   3. bunx cap open android
+ */
 const config: CapacitorConfig = {
-  appId: "app.lovable.a306a400ad994778b7dca0a0d1f73eda",
+  appId: "com.uptaragua.campus",
   appName: "UPT Aragua",
   webDir: "dist",
-  bundledWebRuntime: false,
   android: {
     allowMixedContent: true,
   },
-  ios: {
-    contentInset: "always",
+  server: {
+    androidScheme: "https",
   },
 };
 
