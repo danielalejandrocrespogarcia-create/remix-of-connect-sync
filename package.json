@@ -7,15 +7,17 @@
     "dev": "vite",
     "build": "vite build",
     "build:dev": "vite build --mode development",
-    "build:android": "vite build && cap sync android",
+    "build:android": "node scripts/build-android.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "android:open": "cap open android"
   },
   "dependencies": {
+    "@capacitor/android": "^8.5.3",
     "@capacitor/app": "^8.1.0",
-    "@capacitor/core": "^8.3.1",
+    "@capacitor/core": "^8.5.3",
     "@capacitor/local-notifications": "^8.0.2",
     "@capacitor/splash-screen": "^8.0.1",
     "@capacitor/status-bar": "^8.0.2",
@@ -72,8 +74,7 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@capacitor/android": "^8.3.1",
-    "@capacitor/cli": "^8.3.1",
+    "@capacitor/cli": "^8.5.3",
     "@eslint/js": "^9.32.0",
     "@tailwindcss/typography": "^0.5.19",
     "@testing-library/jest-dom": "^6.6.0",

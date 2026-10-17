@@ -1,6 +1,7 @@
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
+import { isCapacitorApp } from "@/lib/platform";
 
 // Clean up any previously-registered service workers when running inside
 // the Lovable preview iframe — they cause stale caches and break HMR.
@@ -15,7 +16,9 @@ const isPreviewHost =
   window.location.hostname.includes("id-preview--") ||
   window.location.hostname.includes("lovableproject.com");
 
-if ((inIframe || isPreviewHost) && "serviceWorker" in navigator) {
+if (isCapacitorApp) {
+  // Native Android/iOS app: no service worker needed.
+} else if ((inIframe || isPreviewHost) && "serviceWorker" in navigator) {
   navigator.serviceWorker
     .getRegistrations()
     .then((regs) => regs.forEach((r) => r.unregister()))
