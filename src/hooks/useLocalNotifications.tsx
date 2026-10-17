@@ -59,7 +59,6 @@ const scheduleAll = async (items: ScheduleItem[]) => {
           allowWhileIdle: true,
           repeats: true,
         },
-        smallIcon: "ic_stat_icon",
       }];
     });
 
