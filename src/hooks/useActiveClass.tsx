@@ -35,7 +35,7 @@ export const useActiveClass = (sessionGroup: string = DEFAULT_SECTION) => {
     fetchData();
 
     const channel = supabase
-      .channel(`active_class:${sessionGroup}`)
+      .channel(`active_class:${sessionGroup}:${Math.random().toString(36).slice(2, 10)}`)
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "active_class", filter: `session_group=eq.${sessionGroup}` },

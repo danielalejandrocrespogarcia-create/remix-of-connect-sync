@@ -52,7 +52,7 @@ export const useNotifications = () => {
     if (!user || !activeSection) return;
 
     const channel = supabase
-      .channel(`notify-chat:${activeSection}:${user.id}`)
+      .channel(`notify-chat:${activeSection}:${user.id}:${Math.random().toString(36).slice(2, 10)}`)
       .on(
         "postgres_changes",
         {
@@ -119,7 +119,7 @@ export const useNotifications = () => {
     if (!user || !activeSection) return;
 
     const channel = supabase
-      .channel(`notify-ann:${activeSection}:${user.id}`)
+      .channel(`notify-ann:${activeSection}:${user.id}:${Math.random().toString(36).slice(2, 10)}`)
       .on(
         "postgres_changes",
         { event: "INSERT", schema: "public", table: "announcements" },
