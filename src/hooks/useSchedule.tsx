@@ -64,7 +64,7 @@ export const useSchedule = (sessionGroup: string) => {
     fetch();
 
     const ch = supabase
-      .channel(`schedules:${sessionGroup}`)
+      .channel(`schedules:${sessionGroup}:${Math.random().toString(36).slice(2, 10)}`)
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "schedules", filter: `session_group=eq.${sessionGroup}` },

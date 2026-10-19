@@ -46,7 +46,7 @@ export const useAnnouncements = (sessionGroup: string = DEFAULT_SECTION, limit =
     fetch();
 
     const channel = supabase
-      .channel(`announcements:${sessionGroup}`)
+      .channel(`announcements:${sessionGroup}:${Math.random().toString(36).slice(2, 10)}`)
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "announcements" },

@@ -86,7 +86,7 @@ export const useChat = (mySessionGroup: string = DEFAULT_SECTION) => {
     init();
 
     const channel = supabase
-      .channel(`chat:${mySessionGroup}`)
+      .channel(`chat:${mySessionGroup}:${Math.random().toString(36).slice(2, 10)}`)
       .on(
         "postgres_changes",
         { event: "INSERT", schema: "public", table: "chat_messages", filter: `session_group=eq.${mySessionGroup}` },

@@ -16,6 +16,7 @@ import Profile from "./pages/Profile";
 import TeacherPanel from "./pages/TeacherPanel";
 import AdminPanel from "./pages/AdminPanel";
 import SchedulePage from "./pages/SchedulePage";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { AppLayout } from "@/components/AppLayout";
 import NotFound from "./pages/NotFound";
 
@@ -26,6 +27,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      <ErrorBoundary>
       <BrowserRouter>
         <AuthProvider>
           <Routes>
@@ -43,6 +45,7 @@ const App = () => (
           </Routes>
         </AuthProvider>
       </BrowserRouter>
+      </ErrorBoundary>
     </TooltipProvider>
   </QueryClientProvider>
 );
