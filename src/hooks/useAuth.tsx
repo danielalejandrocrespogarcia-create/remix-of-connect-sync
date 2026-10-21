@@ -40,15 +40,37 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [role, setRole] = useState<AppRole | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [sessionLoading, setLoading] = useState(true);
+  // Profile/role load separately from the session; screens that depend on the
+  // role (teacher/admin panels) must wait for both or they redirect too early.
+  const [profileLoading, setProfileLoading] = useState(false);
+  const loading = sessionLoading || profileLoading;
 
   const loadProfileAndRole = async (uid: string) => {
-    const [{ data: prof }, { data: roleRow }] = await Promise.all([
-      supabase.from("profiles").select("*").eq("user_id", uid).maybeSingle(),
-      supabase.from("user_roles").select("role").eq("user_id", uid).maybeSingle(),
-    ]);
-    setProfile(prof as Profile | null);
-    setRole((roleRow?.role as AppRole) ?? null);
+    setProfileLoading(true);
+    try {
+      const [{ data: prof, error: profErr }, { data: roleRows, error: roleErr }] = await Promise.all([
+        supabase.from("profiles").select("*").eq("user_id", uid).maybeSingle(),
+        supabase.from("user_roles").select("role").eq("user_id", uid),
+      ]);
+      if (profErr) console.error("Error cargando perfil:", profErr.message);
+      if (roleErr) console.error("Error cargando rol:", roleErr.message);
+      setProfile(prof as Profile | null);
+      // A user could have more than one row; pick the highest privilege.
+      const roles = (roleRows ?? []).map((r: { role: string }) => r.role as AppRole);
+      const best: AppRole | null = roles.includes("admin")
+        ? "admin"
+        : roles.includes("teacher")
+          ? "teacher"
+          : roles.includes("student")
+            ? "student"
+            : null;
+      setRole(best);
+    } catch (err) {
+      console.error("Error de conexión al cargar el perfil:", err);
+    } finally {
+      setProfileLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -66,6 +88,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (newUserId !== lastUserId) {
         lastUserId = newUserId;
         if (newUserId) {
+          setProfileLoading(true);
           setTimeout(() => {
             if (mounted) loadProfileAndRole(newUserId);
           }, 0);
