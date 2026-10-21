@@ -13,7 +13,9 @@ export const BottomNav = () => {
     { to: "/app/chat", label: "Chat", icon: MessageSquare },
     ...(role === "admin"
       ? [{ to: "/app/admin", label: "Admin", icon: ShieldCheck }]
-      : []),
+      : role === "teacher"
+        ? [{ to: "/app/docente", label: "Docente", icon: ShieldCheck }]
+        : []),
     { to: "/app/perfil", label: "Perfil", icon: User },
   ];
 

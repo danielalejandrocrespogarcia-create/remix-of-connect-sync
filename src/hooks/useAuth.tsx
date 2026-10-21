@@ -88,6 +88,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (newUserId !== lastUserId) {
         lastUserId = newUserId;
         if (newUserId) {
+          setProfileLoading(true);
           setTimeout(() => {
             if (mounted) loadProfileAndRole(newUserId);
           }, 0);
